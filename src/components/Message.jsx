@@ -1,30 +1,40 @@
-import React, { useEffect } from "react";
-import { Text, Paper, Flex, Button } from "@mantine/core";
+import React, { useEffect, useContext } from "react";
+import { Text, Paper, Flex, Button, useMantineTheme } from "@mantine/core";
 import socket from "../scripts/socket";
+import GlobalContext from "../scripts/globalContext";
 
-const Message = ({ user, content, timestamp }) => {
+const Message = ({ user, content, timestamp, id, isOwner }) => {
+    let time = new Date(timestamp);
+
+    let heure = time.getHours();
+    let minute = time.getMinutes();
+
+    const theme = useMantineTheme();
     return (
-        <Paper
-            shadow="xs"
-            p="xs"
-            radius="md"
-            miw={200}
-            maw={500}
-            color="pink.4"
-        >
-            <Flex
-                direction="row"
-                gap={{ base: "sm", sm: "lg" }}
-                justify="space-between"
-                pb="ms"
-            >
-                <Text>{user?.username}Ici c'est le nom</Text>
-                <Text>{timestamp}11:35</Text>
-            </Flex>
-            <Text ta="left" fz="sm">
-                {content}
-            </Text>
-        </Paper>
+        <Flex w={"100%"} justify={isOwner ? "end" : "start"}>
+            <Paper shadow="xs" p="xs" radius="md" w={"40%"} color="pink.4">
+                <Flex
+                    direction="row"
+                    gap={{ base: "sm", sm: "lg" }}
+                    justify="space-between"
+                    pb="ms"
+                >
+                    <Text>{user?.username}</Text>
+                    <Text>
+                        {heure}:{minute}
+                    </Text>
+                    <Button
+                        onClick={() => socket.emit("DeleteMessage", id)}
+                        sx={{
+                            backgroundColor: theme.colors.red[8],
+                        }}
+                    ></Button>
+                </Flex>
+                <Text ta="left" fz="sm">
+                    {content}
+                </Text>
+            </Paper>
+        </Flex>
     );
 };
 

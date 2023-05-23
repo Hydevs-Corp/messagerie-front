@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "@mantine/form";
-import { TextInput, Button, Box } from "@mantine/core";
+import { TextInput, Button, Box, Flex } from "@mantine/core";
 import socket from "../scripts/socket";
 
 const Inputmessage = () => {
@@ -21,7 +21,7 @@ const Inputmessage = () => {
     });
 
     return (
-        <>
+        <Flex w={"100%"} justify={"center"}>
             <Box maw={300}>
                 <form onSubmit={submit}>
                     <TextInput
@@ -37,7 +37,7 @@ const Inputmessage = () => {
                 onChange={(e) => setContent(e.target.value)}
             />
             <p>{content}</p> */}
-        </>
+        </Flex>
     );
 };
 
