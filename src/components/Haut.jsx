@@ -3,7 +3,7 @@ import { useState, useContext, createRef } from "react";
 import socket from "../scripts/socket";
 import GlobalContext from "../scripts/globalContext";
 
-const Header = () => {
+const Haut = () => {
     const { userAgent, setUserAgent } = useContext(GlobalContext);
     const usernameInput = createRef();
 
@@ -17,7 +17,7 @@ const Header = () => {
     };
 
     return (
-        <Box className="header" w={"100vw"}>
+        <Box className="header">
             <Flex
                 justify={"flex-end"}
                 align={"center"}
@@ -36,4 +36,4 @@ const Header = () => {
     );
 };
 
-export default Header;
+export default Haut;

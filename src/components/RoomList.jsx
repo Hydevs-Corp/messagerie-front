@@ -43,65 +43,43 @@ const RoomList = () => {
 
     return (
         <Flex h={"100%"}>
-            <Navbar
-                className="roomlist"
-                height={"100%"}
-                p="xs"
-                width={{ base: 300 }}
-                sx={{ backgroundColor: theme.colors.blue[1] }}
-            >
-                <Flex direction={"column"} gap={15}>
-                    <Navbar.Section>
-                        <Text>ChatRooms </Text>
-                    </Navbar.Section>
-                    <Navbar.Section>
-                        <Flex>
-                            {/* <TextInput onInput={(e) => setRoomName(e.value.target)} /> */}
-                            <TextInput
-                                onInput={(e) => setRoomName(e.target.value)}
-                            />
+            <Flex direction={"column"} gap={15}>
+                <Text>ChatRooms </Text>
+                <Flex>
+                    {/* <TextInput onInput={(e) => setRoomName(e.value.target)} /> */}
+                    <TextInput onInput={(e) => setRoomName(e.target.value)} />
+                    <Button
+                        onClick={() => socket.emit("CreateRoom", roomName)}
+                    ></Button>
+                </Flex>
+                <Divider size="xs" my={"xs"} />
+
+                <Box ta="left" pl={10}>
+                    {rooms.map((el, id) => (
+                        <Box key={id}>
+                            {el.roomName}
                             <Button
                                 onClick={() =>
-                                    socket.emit("CreateRoom", roomName)
+                                    socket.emit("joinRoom", el.roomName)
                                 }
-                            ></Button>
-                        </Flex>
-                        <Divider size="xs" my={"xs"} />
-                    </Navbar.Section>
-
-                    <Navbar.Section grow mt="md">
-                        <Box ta="left" pl={10}>
-                            {rooms.map((el, id) => (
-                                <Box key={id}>
-                                    {el.roomName}
-                                    <Button
-                                        onClick={() =>
-                                            socket.emit("joinRoom", el.roomName)
-                                        }
-                                    >
-                                        Join
-                                    </Button>
-                                    <Button
-                                        sx={{
-                                            backgroundColor:
-                                                theme.colors.red[8],
-                                        }}
-                                        onClick={() =>
-                                            socket.emit(
-                                                "DeleteRoom",
-                                                el.roomName
-                                            )
-                                        }
-                                    >
-                                        Delete
-                                    </Button>
-                                    <Divider size="xs" />
-                                </Box>
-                            ))}
+                            >
+                                Join
+                            </Button>
+                            <Button
+                                sx={{
+                                    backgroundColor: theme.colors.red[8],
+                                }}
+                                onClick={() =>
+                                    socket.emit("DeleteRoom", el.roomName)
+                                }
+                            >
+                                Delete
+                            </Button>
+                            <Divider size="xs" />
                         </Box>
-                    </Navbar.Section>
-                </Flex>
-            </Navbar>
+                    ))}
+                </Box>
+            </Flex>
         </Flex>
     );
 };

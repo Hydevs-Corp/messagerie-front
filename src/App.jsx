@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import socket from "./scripts/socket";
 import MessageArea from "./components/MessageArea";
-import Header from "./components/Header";
-import { Box } from "@mantine/core";
+import Haut from "./components/Haut";
+import { Box, AppShell, Navbar, Header } from "@mantine/core";
 import GlobalContext from "./scripts/globalContext";
 
 import RoomList from "./components/RoomList.jsx";
@@ -21,11 +21,27 @@ function App() {
     console.log("coucou, on est là", userAgent);
     return (
         <GlobalContext.Provider value={{ userAgent, setUserAgent }}>
-            <Box w={"100vw"} h={"100vh"} className="app">
-                <Header />
-                <RoomList />
+            <AppShell
+                sx={{
+                    ".mantine-AppShell-main": {
+                        maxHeight: "100vh",
+                        width: "100vw",
+                    },
+                }}
+                className="app"
+                navbar={
+                    <Navbar bg={"blue"} width={{ base: 300 }}>
+                        <RoomList />
+                    </Navbar>
+                }
+                header={
+                    <Header height={{ base: 100 }}>
+                        <Haut />
+                    </Header>
+                }
+            >
                 <MessageArea />
-            </Box>
+            </AppShell>
         </GlobalContext.Provider>
     );
 }

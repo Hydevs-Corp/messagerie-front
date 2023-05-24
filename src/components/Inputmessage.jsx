@@ -21,7 +21,7 @@ const Inputmessage = () => {
     });
 
     return (
-        <Flex w={"100%"} justify={"center"}>
+        <Flex justify={"center"}>
             <Box maw={300}>
                 <form onSubmit={submit}>
                     <TextInput

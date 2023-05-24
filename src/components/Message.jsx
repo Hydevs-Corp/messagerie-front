@@ -1,7 +1,7 @@
 import React, { useEffect, useContext } from "react";
-import { Text, Paper, Flex, Button, useMantineTheme } from "@mantine/core";
+import { Text, Paper, Flex, Button, useMantineTheme, Box } from "@mantine/core";
 import socket from "../scripts/socket";
-import GlobalContext from "../scripts/globalContext";
+import "./Message.css";
 
 const Message = ({ user, content, timestamp, id, isOwner }) => {
     let time = new Date(timestamp);
@@ -11,8 +11,8 @@ const Message = ({ user, content, timestamp, id, isOwner }) => {
 
     const theme = useMantineTheme();
     return (
-        <Flex w={"100%"} justify={isOwner ? "end" : "start"}>
-            <Paper shadow="xs" p="xs" radius="md" w={"40%"} color="pink.4">
+        <Flex justify={isOwner ? "end" : "start"}>
+            <Paper w={"70%"} shadow="xs" p="xs" radius="md" color="pink.4">
                 <Flex
                     direction="row"
                     gap={{ base: "sm", sm: "lg" }}
@@ -30,7 +30,7 @@ const Message = ({ user, content, timestamp, id, isOwner }) => {
                         }}
                     ></Button>
                 </Flex>
-                <Text ta="left" fz="sm">
+                <Text className="Texte" ta="left" size={"sm"}>
                     {content}
                 </Text>
             </Paper>

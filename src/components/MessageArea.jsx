@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import Message from "./Message";
 import Inputmessage from "./Inputmessage";
 import socket from "../scripts/socket";
-import { Box, ScrollArea, Flex } from "@mantine/core";
+import { Box, ScrollArea, Flex, Container } from "@mantine/core";
 import GlobalContext from "../scripts/globalContext";
 
 const MessageArea = () => {
@@ -18,7 +18,8 @@ const MessageArea = () => {
                 console.log("old", old);
                 let newList = [...old];
                 newList.push(newMessage);
-                if (newList.length > 10) {
+                // SEB
+                if (newList.length > 15) {
                     newList.shift();
                 }
                 return newList;
@@ -47,21 +48,60 @@ const MessageArea = () => {
     console.log("messageList", messageList);
 
     return (
-        <Box className="chatroom" w={"100%"} h={"100%"}>
-            <ScrollArea h={"80%"}>
-                {messageList.map((el, key) => (
-                    <Message
-                        {...el}
-                        isOwner={el.user?.id === userAgent?.id}
-                        key={key}
-                    />
-                ))}
+        <Flex
+            direction={"column"}
+            sx={{
+                height: "100%",
+                maxWidth: "100%",
+                margin: "auto",
+                width: "900px",
+            }}
+            className="chatroom"
+        >
+            <Box
+                w={"100%"}
+                // w="400px"
+                // maw={"100%"}
+                h={"100%"}
+                sx={(theme) => ({
+                    boxSizing: "border-box",
+                    flex: 1,
+                    overflowY: "scroll",
+                    "&::-webkit-scrollbar": {
+                        width: "7px",
+                        opacity: 0,
+                    },
+                    "&::-webkit-scrollbar-thumb": {
+                        backgroundColor:
+                            theme.colorScheme === "dark"
+                                ? "#FFFFFF44"
+                                : "#00000022",
+                        borderRadius: "30px",
+                        cursor: "default",
+                    },
+                    "&::-webkit-scrollbar-thumb:hover": {
+                        backgroundColor:
+                            theme.colorScheme === "dark"
+                                ? "#FFFFFF55"
+                                : "#00000033",
+                    },
+                })}
+            >
+                <Flex direction={"column"} gap="xs" p="xs">
+                    {messageList.map((el, key) => (
+                        <Message
+                            {...el}
+                            isOwner={el.user?.id === userAgent?.id}
+                            key={key}
+                        />
+                    ))}
+                </Flex>
                 {/* je map le state ici => Message user, timestamp... */}
-            </ScrollArea>
-            <Flex h={"144px"} justify={"center"} align={"center"}>
+            </Box>
+            <Flex justify={"center"} align={"center"}>
                 <Inputmessage />
             </Flex>
-        </Box>
+        </Flex>
     );
 };
 
